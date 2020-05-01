@@ -1,0 +1,404 @@
+++++++++++++++++++++++++++++++  Linux Commands  ++++++++++++++++++++++++++
+
++++++++++++++++   To search for files from command line  +++++++++++++++++++++
+
+<<<<<<<<<<<<<<<   find command  >>>>>>>>>>>>>
+
+find <directory> -name "name of file"       ==>   Search for name
+find <directory> -iname "name"              ==>   Search for file regardless of case sensitivity
+find <directory> -type f -name "filename"   ==>   Search for files or dirctories
+find <directory> -type f -user <username>   ==>   to see all the files owned by a specific user
+
+<<<<<<<<<<<<<<<<<<   locate  >>>>>>>>>>>>>>>>
+
+Locate works on a local database. To update database type $updatedb
+
+locate <filename>                           ==>   locate a file
+locate -i <filename>                        ==>   locate for file regardless of case sensitivity
+
+<<<<<<<<<<<<<<<<<<   which  >>>>>>>>>>>>>>>>
+
+It returns the location of command based on PATH setting
+which <command>                             ==>  Returns location of command
+
+<<<<<<<<<<<<<<<<<<   whereis  >>>>>>>>>>>>>>>>
+
+It returns the location of binary, source file and man pages
+
+whereis <binary>                            ==>   Returns the location of binary
+whereis <binary> <path> tr " " '\n'         ==>   Returns the location of binary in a better output format (tr->translate, \n-> new line)
+
+
+++++++++++++++++++ Create and Manipulate files ++++++++++++++++++++++++++++++
+
+<<<<<<<<<<<<<<<<<<<<<<<<< cat >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+cat <filename>                              ==>   View file
+
+<<<<<<<<<<<<<<<<<<<<<<<<< more >>>>>>>>>>>>>>>>>>>>>>>>>>>
+It displays one screen at a time
+
+more <filename>                             ==>   view file one screen at a time
+cat <filename> | more                       ==>   view file one screen at a time
+
+<<<<<<<<<<<<<<<<<<<<<<<<< less >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+It allows to view one line at a time.
+
+less <filename>                             ==>   view file one screen at a time
+less +F <filename>                          ==>   shows live update of a file (generally used for log files)
+/<word>                                     ==>   search for a word in file while less is opened
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<< sort >>>>>>>>>>>>>>>>>>>>>>>>>>>
+sorts file in a specific order
+
+cat <filename> | sort                       ==>   sorts file in ascending order
+sort -r <filename>                          ==>   sorts file in reverse order
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<< touch >>>>>>>>>>>>>>>>>>>>>>>>>>
+Used to create empty file and modify time stamp
+
+touch <filename>                            ==>  create an empty file
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<< diff >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Compares 2 files and directories line by line
+
+diff <file1> <file2>                        ==>  returns difference in files
+diff -c <file1> <file2>                     ==>  better output format
+diff <directory 1> <directory 2>            ==>  returns difference in directories
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<< comm >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Compare 2 sorted files line by line. Output is generated in 3 colomns: Unique to file1 ; Unique to file2 ; same in both files
+comm <file1> <file2>                        ==>  compares 2 sorted files
+
+<<<<<<<<<<<<<<<<<<<<<<<<<< cmp >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Compare 2 files, byte by byte, and returns the position of first difference
+cmp <file1> <file2>                         ==>  returns first difference in files
+
+
++++++++++++++++++++++++++++++++ Regular Expressions ++++++++++++++++++++++++++
+
+
+^  ------------> start of a string or line
+$  ------------> end of a string or line
+.  ------------> wildcard that can match any character except '\n'
+|  ------------> matches a specific character or group of charactres on either side ( eg -> a|b corresponds to a or b )
+\  ------------> used to escape a special character
+t  ------------> the character t
+az ------------> the string az
+
+grep '^The' <filename>                      ==>   shows all lines in file starting with 'The'
+grep '^T[a-z][^e]' <filename>               ==>   search for lines starting with 'T' followed by a-z but does not end with 'e'
+grep '\<[tT]he\>' <filename>                ==>   search for every 'the' in file
+
+
++++++++++++++++++++++++++++ Archive, backup, compress and decompress files +++++++++++++++++++++
+
+
+tar cvf <filename.tar> /path/to/source      ==>   creates a tar file
+tar cvfz <filename.tar.gz> /path/to/source  ==>   creates a compressed tar file using gzip
+tar tf <filename.tar>                       ==>   view the tar file components
+tar xvfz <filename.tar.gz>                  ==>   extract the tar file
+tar xvfz <filename.tar.gz> ==directory=<dir>==>   extract the tar file to another directory
+
+
+++++++++++++++++++++++++++++ Create, Delete, Copy and move files and directories+++++++++++++++++++
+
+
+<<<<<<<<<<<<<<<<<<<<<<<< Create a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+touch <filename>                            ==>   creates an empty file 
+vim <filename>                              ==>   creates an empty file
+command redirection                         ==>   redirects the output of the command to another place (eg. -> ls -hlF > listfile.txt)
+
+<<<<<<<<<<<<<<<<<<<<<< Make a Directory >>>>>>>>>>>>>>>>>>>>>>>>
+
+mkdir <name>                                ==>   creates a directory
+
+<<<<<<<<<<<<<<<<<<<<<<< Copy a file >>>>>>>>>>>>>>>>>>>>>>>>>
+
+cp <file_name> <target directory>           ==>   copies a file to another directory
+cp <file_name> <dir/file_name_2>            ==>   rename the file while copying
+
+<<<<<<<<<<<<<<<<<<<<<<<< Move and rename a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+mv <filename> /target/directory             ==>   move a file
+mv <filename 1> <filename 2>                ==>   rename a file
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete a file and directory >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+rm <filename>                               ==>   removes a file
+rm <directory>                              ==>   removes the directory only if it is empty
+rm -r <directory>                           ==>   removes the directory along with all subdirectories
+rm -rf <directory>                          ==>   removes the directory forcibly along with all subdirectories
+
+
++++++++++++++++++++++++++++++++ Hard Links vs Soft links +++++++++++++++++++++++++++++++++
+
+
+Hard Links:
+-> Direct pointer to file
+-> can only be a file
+-> share the same inode as source
+-> as long as hard link exists, file exists
+
+ln <file_name> <name of link>               ==>   create a hard link
+ls -li                                      ==>   shows inode value of file
+
+Soft Links:
+-> can be a file or directory
+-> has a unique inode value
+-> if source file is deleted, link is broken
+
+ln -s <file_name> <name_of_link>            ==>   create a soft link
+
+
++++++++++++++++++++++++++++++++++ Modify Permissions ++++++++++++++++++++++++++++++++++++
+
+
+chmod 777 <filename>                        ==>   grant full access to everyone
+chmod u+rwx <filename>                      ==>   grant full access to user
+chmod 766 <filename>                        ==>   remove execute access from group and others
+chmod g-x <filename>                        ==>   remove execute access from group
+
+chown <owner>:<group> <filename>            ==>   modify ownership of file
+chown <old_group>:<new_group> <filename>    ==>   change file group
+
+
+++++++++++++++++++++++++++++++ Reading and Using System Documentation +++++++++++++++++++++++
+
+man <command>                               ==> display command documentation
+info <command>                              ==> display command documentation
+<command> --help                            ==> display command documentation   
+
+
+++++++++++++++++++++++++++++++ Booting, rebooting, and shutting down ++++++++++++++++++++++++++++
+
+shutdown -r <time>                          ==>   reboot at a particular time 
+shutdown -P <time>                          ==>   shutdown at a particular time 
+shutdown -H <time>                          ==>   halt at a particular time 
+
+NOTE : To do immediate booting, rebooting and shutting down, use 'now' instead of <time>.
+
+
+++++++++++++++++++++++++++++++ Diagonose and Manage Process ++++++++++++++++++++++++++++++++++
+
+top                                         ==>   Display linux processes
+htop                                        ==>   Expand on top's ability, offering colour highliting, mouse integration
+ps                                          ==>   Displays a snapshot of processes at a specific point in time
+ps -ef                                      ==>   User,PID,Shell,ProcessName
+ps -aux                                     ==>   User,PID,Shell,ProcessName,%CPU,%MEM
+nice (eg. nice -n <number> <command>)       ==>   Modifies the priority of a new process (-20 is the hightest priority and 19 is lowest)
+renice (eg. renice <number> <command>)      ==>   modifies the priority of a running process
+kill <pid>                                  ==>   kills a process
+
+
++++++++++++++++++++++++++++++++ Manage startup process and services ++++++++++++++++++++++++++++++++++++++++
+
+systemctl status <service/process>          ==>   status of service/process
+systemctl start <service/process>           ==>   start service/process
+systemctl stop <service/process>            ==>   stop service/process
+systemctl restart <service/process>         ==>   restart service/process
+systemctl enable <service/process>          ==>   enable service/process
+systemctl disable <service/process>         ==>   disable service/process
+
+
++++++++++++++++++++++++++++++++ Create, delete and modify local user accounts +++++++++++++++++++++++++++++++
+
+useradd <useradd>                           ==>   create user account
+useradd -m -s <shell> <username>            ==>   create user account with home directory
+passwd <username>                           ==>   create password for user
+
+adduser <username>                          ==>   better version of useradd as it creates home directory and password automatically
+
+usermod -c <comment> <username>             ==>   add comment to a user
+usermod -aG <group> <username>              ==>   add user to a group
+
+userdel <username>                          ==>   delete user
+
+
+++++++++++++++++++++++++++++++   Groups   +++++++++++++++++++++++++++++++++++++
+
+
+groupadd <name>                             ==>   add a new group
+usermod -aG <groupname> <username>          ==>   add user to a group
+gpasswd -a <group> <username>               ==>   set password to a group
+gpasswd -d <group> <username>               ==>   remove password from a group
+groupdel <groupname>                        ==>   delete group
+delgroup <groupname>                        ==>   delete group
+sudo vigr                                   ==>   edit group manually
+
+
+++++++++++++++++++++++++++++   Configure User Resource Limits   +++++++++++++++++++++
+
+The resource limits are defined in /etc/security/limits.conf file.
+There are 2 types of limits:
+
+(i) : Hard limit: set by admin and cannot be changed
+(ii): Soft limit: can be adjusted by user upto the hard limit
+
+File format : 
+
+(i)  :   Domain -> User/group/wildcards
+(ii) :  Type  -> Hard/soft limit
+(iii): Item -> Memory size, file size, number of files
+(iv) :  Value -> Limit, either by numeric value or size in kb
+
+NOTE : User Limit takes priority over group limits
+To see limit defined for user, go to that user by typing su <username> and then type ulimit -a
+
+
++++++++++++++++++++++++++++   Manage User Privilages   +++++++++++++++++++++++++++
+
+The user privilages are difined in /etc/security/access.conf
+
+Entry Format:
+(i)  : Permissions (+ or -) grant or deny access
+(ii) : User can be a user, group or ALL
+(iii): Point of origin could be hostname, domain-name, IP address, IP Subnet or ALL
+
+
+++++++++++++++++++++++++++++++++++   Networking   +++++++++++++++++++++++++++++++++
+
+cat /etc/os-release                         ==>   To see OS release
+
+The Networking info is kept in 
+/etc/network
+/etc/network/interfaces
+/etc/network/interfaces.d
+
+To set interface to use static ip:
+
+cd /etc/network/interfaces.d                ==>   Go inside that directory
+ls -al                                      ==>   List all contents of that directory
+
+In the directory there will be a .cfg file present. Open the file using vim and then :
+--> Replace dhcp with static
+--> give static ip address
+--> give subnet
+--> give gateway
+--> give dns-nameservers (8.8.8.8, 8.8.4.4) (most common google dns servers)
+
+In latest versions of Ubuntu, go to /etc/netplan 
+In this directory only 1 file is present. Use vim to open this file
+
+--> Change dhcp: no
+--> addresses : []
+--> gateway : 
+--> nameservers:
+      addresses: [8.8.8.8, 8.8.4.4]
+      
+
+++++++++++++++++++++++++++++++   Implement Packet Filtering   +++++++++++++++++++++++++
+
+iptables -L                                 ==>   check for existing rules
+iptables --flush                            ==>   flush all rules
+
+To REJECT a packet from entering the system:  
+iptables -A INPUT --protocol icmp --in-interface <name> -j REJECT
+
+To DROP a packet from entering the system:  
+iptables -A INPUT --protocol icmp --in-interface <name> -j DROP
+
+
++++++++++++++++++++++++++++++++   Statically Route IP Traffic   ++++++++++++++++++++++++
+
+route -n                                    ==>   See Ip Tables
+ip route show                               ==>   See Ip Tables
+traceroute <ip>                             ==>   to see the route of packet
+sysctl net.ipv4.ip_forward                  ==>   to see if IP forwading is enabled or not
+
+To add a new route :
+ip route add <ip_of_target> proto static metric <metric_number> via inet <ip_of_system> dev <interface_name>
+Here, Metric is used for load balancing
+
+To delete the route :
+ip route del <ip_of_target> proto static metric <metric_number> via inet <ip_of_system> dev <interface_name>
+
+To see ip of system :
+ip addr show
+
+
++++++++++++++++++++++++++++++++++   Storage Managment   +++++++++++++++++++++++++++++++++++
+
+lsblk                                      ==>  To see list of all block devices
+fdisk /dev/                                ==>  To create a partition
+parted /dev/                               ==>  To create a partition
+
+NOTE: fdisk is used to manage partitions less than 2TB. Also, it can't expand or shrink partitions
+For this purpose, we use parted
+
+
+++++++++++++++++++++++++++++   Logical Volume Managment   +++++++++++++++++++++++++++++++++++
+
+pvcreate /dev/disk1 /dev/disk2             ==>  pvcreate is a utility to initialize device blocks into physical volume for LVM
+pvdisplay                                  ==>  To see the list 
+pvs                                        ==>  To see the list 
+
+vgcreate <vgname> /dev/disk1 /dev/disk2    ==>  vgcreate is a utility to create a volume group from physical volumes
+vgdisplay                                  ==>  to see the list of volume group
+vgs                                        ==>  to see the list of volume group
+
+lvcreate --name <lvname> --size _M <vgname> ==>  to create a logical volume
+lvdisplay                                   ==>  to see the list of logical volume
+lvs                                         ==>  to see the list of logical volume
+
+mkfs.ext4 /dev/vgname/lvname                ==>  to make a file system
+
+mount /dev/vgname/lvname /directory         ==>  to mount this filesystem to a directory
+
+vgextend vgname /dev/disk1                  ==>  adds the disk to the existing volume group
+
+lvextend -l EXTENDS(PE) /dev/vgname/lvname  ==>  to extend the logical volume (get PE number from vgdisplay command)
+
+resize2fs /dev/vgname/lvname                ==>   to update this information to filesystem
+
+
+++++++++++++++++++++++++++++++++++++   Create and Configure Encrypted Storage   ++++++++++++++++++++++++++++
+
+apt install cryptsetup                      ==>   to install cryptsetup
+cryptsetup -y luksFormat /dev/              ==>   to create an encrypted setup
+cryptsetup luksOpen /dev/ <fsname>          ==>   to open a cryptsetup
+mkfs.ext4 /dev/mapper/fsname                ==>   make a file system 
+mount /dev/mapper/fsname /mnt/dir           ==>   to mount the file system
+umount /mnt/dir                             ==>   to unmount 
+cryptsetup luksClose fsname                 ==>   to close the setup
+
+To mount filesystem at boot time, go to /etc/fstab
+first, get UUID of the partition /dev/ be typing  blkid | grep sdb
+
+Then, go to /etc/fstab file & type
+UUID=<id> /mnt/ ext4 defaults 0 0
+here, 
+UUID                                        ==>   unique device id
+/mnt/                                       ==>   directory to be mounted
+ext4                                        ==>   filesystem type
+defaults                                    ==>   options
+0                                           ==>   dump value
+0                                           ==>   pass number for disk check
+
+findmnt --verify                            ==>   to verify if there are any errors in fstab file
+mount -a                                    ==>   to mount all filesystems based on fstab file
+
+
+++++++++++++++++++++++++++++   Configure of Manage swap space   +++++++++++++++++++++++++
+
+swapon --show                               ==>   to see details of swap file
+free                                        ==>   to see details of memory
+swapoff -a                                  ==>   to disable swap
+swapon -a                                   ==>   to enable swap
+
+
+++++++++++++++++++++++++++++++++++ Redundant Array of Independent Disks +++++++++++++++++++++++++++
+
+create disk using fdisk command
+
+Then, to create a raid device, type:
+mdadm --create --verbose <raid device name> --level=<raid level> --raid-devices=<number of raid devices> /dev/disk1 /dev/disk2
+
+cat /proc/mdstat                             ==>  to see details of raid 
+mdadm --detail <raid name>                   ==>  to see details of raid
+
+Then, make it a filesystem by 
+mkfs.ext4 <raid name>
+
+Now, mount the raid by
+mount <raid name> /mnt/dir
