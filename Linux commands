@@ -9,7 +9,7 @@ find <directory> -iname "name"              ==>   Search for file regardless of 
 find <directory> -type f -name "filename"   ==>   Search for files or dirctories
 find <directory> -type f -user <username>   ==>   to see all the files owned by a specific user
 
-<<<<<<<<<<<<<<<<<<   locate  >>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<   locate  >>>>>>>>>>>>>>>
 
 Locate works on a local database. To update database type $updatedb
 
@@ -27,6 +27,37 @@ It returns the location of binary, source file and man pages
 
 whereis <binary>                            ==>   Returns the location of binary
 whereis <binary> <path> tr " " '\n'         ==>   Returns the location of binary in a better output format (tr->translate, \n-> new line)
+
+
+++++++++++++++++++++++++++++ Create, Delete, Copy and move files and directories+++++++++++++++++++
+
+
+<<<<<<<<<<<<<<<<<<<<<<<< Create a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+touch <filename>                            ==>   creates an empty file 
+vim <filename>                              ==>   creates an empty file
+command redirection                         ==>   redirects the output of the command to another place (eg. -> ls -hlF > listfile.txt)
+
+<<<<<<<<<<<<<<<<<<<<<< Make a Directory >>>>>>>>>>>>>>>>>>>>>>>>
+
+mkdir <name>                                ==>   creates a directory
+
+<<<<<<<<<<<<<<<<<<<<<<< Copy a file >>>>>>>>>>>>>>>>>>>>>>>>>
+
+cp <file_name> <target directory>           ==>   copies a file to another directory
+cp <file_name> <dir/file_name_2>            ==>   rename the file while copying
+
+<<<<<<<<<<<<<<<<<<<<<<<< Move and rename a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+mv <filename> /target/directory             ==>   move a file
+mv <filename 1> <filename 2>                ==>   rename a file
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete a file and directory >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+rm <filename>                               ==>   removes a file
+rm <directory>                              ==>   removes the directory only if it is empty
+rm -r <directory>                           ==>   removes the directory along with all subdirectories
+rm -rf <directory>                          ==>   removes the directory forcibly along with all subdirectories
 
 
 ++++++++++++++++++ Create and Manipulate files ++++++++++++++++++++++++++++++
@@ -74,6 +105,18 @@ Compare 2 files, byte by byte, and returns the position of first difference
 cmp <file1> <file2>                         ==>  returns first difference in files
 
 
++++++++++++++++++++++++++++++++++ Modify Permissions ++++++++++++++++++++++++++++++++++++
+
+
+chmod 777 <filename>                        ==>   grant full access to everyone
+chmod u+rwx <filename>                      ==>   grant full access to user
+chmod 766 <filename>                        ==>   remove execute access from group and others
+chmod g-x <filename>                        ==>   remove execute access from group
+
+chown <owner>:<group> <filename>            ==>   modify ownership of file
+chown <old_group>:<new_group> <filename>    ==>   change file group
+
+
 +++++++++++++++++++++++++++++++ Regular Expressions ++++++++++++++++++++++++++
 
 
@@ -90,7 +133,7 @@ grep '^T[a-z][^e]' <filename>               ==>   search for lines starting with
 grep '\<[tT]he\>' <filename>                ==>   search for every 'the' in file
 
 
-+++++++++++++++++++++++++++ Archive, backup, compress and decompress files +++++++++++++++++++++
++++++++++++++++++++++++++++   Archive, backup, compress and decompress files    +++++++++++++++++++++
 
 
 tar cvf <filename.tar> /path/to/source      ==>   creates a tar file
@@ -98,37 +141,6 @@ tar cvfz <filename.tar.gz> /path/to/source  ==>   creates a compressed tar file 
 tar tf <filename.tar>                       ==>   view the tar file components
 tar xvfz <filename.tar.gz>                  ==>   extract the tar file
 tar xvfz <filename.tar.gz> ==directory=<dir>==>   extract the tar file to another directory
-
-
-++++++++++++++++++++++++++++ Create, Delete, Copy and move files and directories+++++++++++++++++++
-
-
-<<<<<<<<<<<<<<<<<<<<<<<< Create a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-touch <filename>                            ==>   creates an empty file 
-vim <filename>                              ==>   creates an empty file
-command redirection                         ==>   redirects the output of the command to another place (eg. -> ls -hlF > listfile.txt)
-
-<<<<<<<<<<<<<<<<<<<<<< Make a Directory >>>>>>>>>>>>>>>>>>>>>>>>
-
-mkdir <name>                                ==>   creates a directory
-
-<<<<<<<<<<<<<<<<<<<<<<< Copy a file >>>>>>>>>>>>>>>>>>>>>>>>>
-
-cp <file_name> <target directory>           ==>   copies a file to another directory
-cp <file_name> <dir/file_name_2>            ==>   rename the file while copying
-
-<<<<<<<<<<<<<<<<<<<<<<<< Move and rename a file >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-mv <filename> /target/directory             ==>   move a file
-mv <filename 1> <filename 2>                ==>   rename a file
-
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete a file and directory >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-rm <filename>                               ==>   removes a file
-rm <directory>                              ==>   removes the directory only if it is empty
-rm -r <directory>                           ==>   removes the directory along with all subdirectories
-rm -rf <directory>                          ==>   removes the directory forcibly along with all subdirectories
 
 
 +++++++++++++++++++++++++++++++ Hard Links vs Soft links +++++++++++++++++++++++++++++++++
@@ -149,18 +161,6 @@ Soft Links:
 -> if source file is deleted, link is broken
 
 ln -s <file_name> <name_of_link>            ==>   create a soft link
-
-
-+++++++++++++++++++++++++++++++++ Modify Permissions ++++++++++++++++++++++++++++++++++++
-
-
-chmod 777 <filename>                        ==>   grant full access to everyone
-chmod u+rwx <filename>                      ==>   grant full access to user
-chmod 766 <filename>                        ==>   remove execute access from group and others
-chmod g-x <filename>                        ==>   remove execute access from group
-
-chown <owner>:<group> <filename>            ==>   modify ownership of file
-chown <old_group>:<new_group> <filename>    ==>   change file group
 
 
 ++++++++++++++++++++++++++++++ Reading and Using System Documentation +++++++++++++++++++++++
